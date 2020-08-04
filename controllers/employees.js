@@ -6,4 +6,4 @@ const { handleSQLError } = require('../sql/error')
 
 module.exports = {
 
-  }
+}
