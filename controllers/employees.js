@@ -9,12 +9,13 @@ const getEmployeeByFirstName = (req, res) =>{
 
     pool.query(sql, (err, rows) => {
         if (err) return handleSQLError(res, err)
+        // res.send("getting employees...")
         return res.json(rows);
       })
 }
 
-const updateEmployeeByFirstName = (req, res) => {
-    const by_first_name = req.params.first_name
+const updateEmployeeById = (req, res) => {
+    const id = req.params.id
     let updatedEmployee = req.body
     const birth_date = updatedEmployee.birth_date
     const first_name = updatedEmployee.first_name 
@@ -22,7 +23,7 @@ const updateEmployeeByFirstName = (req, res) => {
     const gender = updatedEmployee.gender
     const hire_date = updatedEmployee.hire_date
     let sql = "UPDATE ?? SET ?? = ?, ?? = ?, ?? = ?, ?? = ?, ?? = ? WHERE ?? = ?"
-    sql = mysql.format(sql, ['employees', 'birth_date', birth_date, 'first_name', first_name, 'last_name', last_name, 'gender', gender, 'hire_date', hire_date, 'first_name', by_first_name])
+    sql = mysql.format(sql, ['employees', 'birth_date', birth_date, 'first_name', first_name, 'last_name', last_name, 'gender', gender, 'hire_date', hire_date, 'id', id])
   
     pool.query(sql, (err, results) => {
       if (err) return handleSQLError(res, err)
@@ -32,5 +33,5 @@ const updateEmployeeByFirstName = (req, res) => {
 
 module.exports = {
     getEmployeeByFirstName,
-    updateEmployeeByFirstName
+    updateEmployeeById
 }
