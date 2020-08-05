@@ -4,10 +4,14 @@ const router = express.Router()
 
 router.get('/', employeesController.getAllEmployees)
 
-router.get('/firstname/:first_name', employeesController.getEmployeeByFirstName)
+router.get('/:first_name', employeesController.getEmployeeByFirstName)
 
-router.get('/employees:emp_no', employeesController.getEmployeeById)
+router.get('/:emp_no', employeesController.getEmployeeById)
 
-router.put('/:id', employeesController.updateEmployeeById)
+router.post('/', employeesController.createNewEmployee)
+
+router.put('/:emp_no', employeesController.updateEmployeeById)
+
+router.delete('/:emp_no', employeesController.deleteEmployeebyId)
 
 module.exports = router
