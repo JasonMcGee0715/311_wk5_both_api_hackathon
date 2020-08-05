@@ -3,7 +3,7 @@ const pool = require('../sql/connection');
 const { handleSQLError } = require('../sql/error');
 
 
-const getEmployees =(req, res) =>{
+const getAllEmployees =(req, res) =>{
     pool.query("SELECT * FROM employees LIMIT 50", (err, rows)=> {
     if (err) return handleSQLError(res, err);
     return res.json(rows);
@@ -34,6 +34,22 @@ const getEmployeeById = (req, res) => {
 })
 };
 
+const createNewEmployee = (req, res) =>{
+    let sql = 'INSERT INTO ?? (??, ??, ??, ??, ??) VALUES (?, ?, ?, ?, ?)'
+    let newEmployee = req.body
+    const birth_date = newEmployee.birth_date
+    const first_name = newEmployee.first_name 
+    const last_name = newEmployee.last_name 
+    const gender = newEmployee.gender
+    const hire_date = newEmployee.hire_date 
+    sql = mysql.format(sql, ['employees', 'birth_date', birth_date, 'first_name', first_name, 'last_name', last_name, 'gender', gender, 'hire_date', hire_date])
+
+    pool.query(sql, (err, results) => {
+        if (err) return handleSQLError(res, err)
+        return res.json({ newId: results.insertId });
+      })
+}
+
 const updateEmployeeById = (req, res) => {
     const id = req.params.id
     let updatedEmployee = req.body
@@ -53,7 +69,9 @@ const updateEmployeeById = (req, res) => {
 
 
 module.exports = {
+    getAllEmployees,
     getEmployeeById,
     getEmployeeByFirstName,
+    createNewEmployee,
     updateEmployeeById
 };
