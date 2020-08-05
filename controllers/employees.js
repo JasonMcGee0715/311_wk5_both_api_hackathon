@@ -22,7 +22,8 @@ const getEmployeeById = (req, res) => {
   pool.query(sql, (err, rows) => {
 		if(err) return handleSQLError(res, err);
 		return res.json(rows)
-});
+})
+};
 
 const updateEmployeeById = (req, res) => {
     const id = req.params.id
@@ -42,6 +43,7 @@ const updateEmployeeById = (req, res) => {
   }
 
 module.exports = {
+    getEmployeeById,
     getEmployeeByFirstName,
     updateEmployeeById
-}
+};
