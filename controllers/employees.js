@@ -14,6 +14,16 @@ const getEmployeeByFirstName = (req, res) =>{
       })
 }
 
+const getEmployeeById = (req, res) => {
+  const id = req.params.id;
+  let sql = `SELECT * FROM ?? WHERE ?? = ?`;
+  sql = mysql.format(sql, ['*','employees', 'emp_no', id]);
+  
+  pool.query(sql, (err, rows) => {
+		if(err) return handleSQLError(res, err);
+		return res.json(rows)
+});
+
 const updateEmployeeById = (req, res) => {
     const id = req.params.id
     let updatedEmployee = req.body
