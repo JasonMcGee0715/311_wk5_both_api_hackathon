@@ -1,6 +1,14 @@
-const mysql = require('mysql')
-const pool = require('../sql/connection')
-const { handleSQLError } = require('../sql/error')
+const mysql = require('mysql');
+const pool = require('../sql/connection');
+const { handleSQLError } = require('../sql/error');
+
+
+const getAllEmployees =(req, res) =>{
+    pool.query("SELECT * FROM employees LIMIT 50", (err, rows)=> {
+    if (err) return handleSQLError(res, err);
+    return res.json(rows);
+});
+};
 
 const getEmployeeByFirstName = (req, res) =>{
     const first_name = req.params.first_name;
@@ -13,6 +21,7 @@ const getEmployeeByFirstName = (req, res) =>{
         return res.json(rows);
       })
 }
+
 
 const getEmployeeById = (req, res) => {
   const id = req.params.id;
@@ -58,7 +67,9 @@ const updateEmployeeById = (req, res) => {
     })
   }
 
+
 module.exports = {
+    getAllEmployees,
     getEmployeeById,
     getEmployeeByFirstName,
     createNewEmployee,
